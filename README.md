@@ -31,28 +31,46 @@ GitHub 저장소: 10개 이상의 커밋, 브랜치 활용(생성/병합), READM
 
 3. 주요 기능 및 실행 흐름
 데이터 흐름: state.json (읽기) → QuizGame 객체 초기화 → (게임 진행) → QuizGame 상태 변경 → state.json (쓰기)
+
 실행 흐름:
+
 시작: QuizGame 인스턴스 생성 및 데이터 로드.
+
 메뉴 출력: 사용자 선택 대기 (입력 검증 필수).
+
 기능 수행: 선택한 번호에 따라 QuizGame 내 메서드 실행.
+
 종료: 데이터 저장 후 안전하게 종료.
 
 5. Git 활용 및 개발 단계 계획 (로드맵)
 미션 요구사항인 10개 이상의 커밋과 브랜치 활용을 위해 아래 순서로 진행하세요.
 
 단계	작업 내용	Git 액션
+
 1	저장소 생성 및 환경 설정	init, .gitignore 추가
+
 2	메뉴 기능 및 기본 골격 구현	Feat: 메뉴 출력 및 입력 루프
+
 3	Quiz 클래스 정의	Feat: Quiz 클래스 생성
+
 4	기본 퀴즈 데이터 5개 작성	Feat: 기본 퀴즈 데이터 추가
+
 5	[브랜치 생성] 퀴즈 풀기 기능	checkout -b feature/play
+
 6	풀기 기능 구현 및 예외 처리	Feat: 퀴즈 풀기 및 정답 확인
+
 7	브랜치 병합	checkout main, merge feature/play
+
 8	퀴즈 추가 및 목록 보기 기능	Feat: 퀴즈 추가 및 목록 기능
+
 9	점수 확인 기능	Feat: 최고 점수 관리 기능
+
 10	파일 입출력(JSON) 구현	Feat: state.json 저장/불러오기
+
 11	README 작성 및 최종 정리	Docs: README 작성
+
 12	[실습] Clone 및 Pull 실습	clone, pull 확인
+
 💡 튜터의 검토 요청
 위 설계안은 미션의 모든 요구사항을 충족하도록 구성되었습니다.
 
