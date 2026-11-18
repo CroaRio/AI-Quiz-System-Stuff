@@ -26,11 +26,12 @@ class QuizGame:
         self.load_data()
 
     def load_data(self):
-        """state.json 파일에서 퀴즈 데이터와 최고 점수를 불러옴"""
-        if not os.path.exists(self.filename):
-            # 파일이 없으면 기본 퀴즈 데이터 생성
-            self.init_default_quizzes()
-            self.save_data()
+        """state.json 파일에서 퀴즈 데이터와 최고 점수를 불러옴
+            즉, 프로그램을 껐다 켜도 유지되도록 게임의 슬롯1 Save 데이터인 셈이다!(데이터 영속성)"""
+        # 파일이 없으면 기본 퀴즈 데이터 생성
+        if not os.path.exists(self.filename):   # 파일이 없다면?
+            self.init_default_quizzes()         # 기본 퀴즈를 만들고
+            self.save_data()                    # state.json 파일로 저장해라!
             print("📂 기본 퀴즈 데이터로 시작합니다.")
             return
 
