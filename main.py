@@ -4,9 +4,21 @@ import os
 class Quiz:
     """개별 퀴즈를 표현하는 클래스"""
     def __init__(self, question, choices, answer):
+        """문제(question), 선택지(choices), 정답(answer)의 기능"""
         self.question = question
         self.choices = choices  # 4개의 리스트
         self.answer = answer    # 정답 번호 (1~4)
+
+    def display(self, index=None):
+        """퀴즈 문제와 선택지를 출력"""
+        prefix = f"[문제 {index}] " if index is not None else ""
+        print(f"{prefix}{self.question}")
+        for idx, choice in enumerate(self.choices, 1):
+            print(f"{idx}. {choice}")
+
+    def is_correct(self, user_answer):
+        """사용자가 입력한 정답 번호가 맞는지 확인"""
+        return user_answer == self.answer
 
     def to_dict(self):
         """JSON 저장을 위해 딕셔너리 형태로 변환"""
@@ -107,17 +119,15 @@ class QuizGame:
 
         for i, q in enumerate(self.quizzes, 1):
             print("-" * 40)
-            print(f"[문제 {i}] {q.question}")
-            for idx, choice in enumerate(q.choices, 1):
-                print(f"{idx}. {choice}")
+            q.display(i)
 
             ans = self.get_validated_input("정답 입력 (1-4): ", 1, 4)
 
-            if ans == q.answer:
-                print("✅ 정답입니다!")
-                score += 1
-            else:
-                print(f"❌ 틀렸습니다! 정답은 {q.answer}번입니다.")
+            if q.is_correct(ans):                                  #정답 판별 담당 부분
+                print("✅ 정답입니다!")                           #
+                score += 1                                       #
+            else:                                                #
+                print(f"❌ 틀렸습니다! 정답은 {q.answer}번입니다.") #여기까지
 
         # 점수 계산 및 최고 점수 갱신 (100점 만점 환산 또는 맞은 개수 기준)
         # 여기서는 맞은 개수를 점수로 사용하거나 백분율로 계산 가능 (미션 예시 기준 맞은 개수 혹은 점수)
