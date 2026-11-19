@@ -152,8 +152,12 @@ class QuizGame:
 
             choices = []
             for i in range(1, 5):
-                choice = input(f"선택지 {i}: ").strip()
-                choices.append(choice)
+                while True:
+                    choice = input(f"선택지 {i}: ").strip()
+                    if choice:
+                        choices.append(choice)
+                        break
+                    print("⚠️ 빈 선택지는 등록할 수 없습니다. 다시 입력해주세요.")
 
             answer = self.get_validated_input("정답 번호 (1-4): ", 1, 4)
 
