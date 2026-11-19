@@ -1,3 +1,4 @@
+from datetime import datetime
 import json
 import os
 
@@ -35,6 +36,7 @@ class QuizGame:
         self.filename = filename
         self.quizzes = []
         self.best_score = 0
+        self.history = []
         self.load_data()
 
     def load_data(self):
@@ -51,6 +53,7 @@ class QuizGame:
             with open(self.filename, "r", encoding="utf-8") as f:
                 data = json.load(f)
                 self.best_score = data.get("best_score", 0)
+                self.history = data.get("history", [])
                 raw_quizzes = data.get("quizzes", [])
                 
                 self.quizzes = []
@@ -68,6 +71,7 @@ class QuizGame:
         try:
             data = {
                 "best_score": self.best_score,
+                "history": self.history,
                 "quizzes": [q.to_dict() for q in self.quizzes]
             }
             with open(self.filename, "w", encoding="utf-8") as f:
@@ -138,7 +142,13 @@ class QuizGame:
         if calculated_score > self.best_score:
             self.best_score = calculated_score
             print("🎉 새로운 최고 점수입니다!")
-            self.save_data()
+
+        self.history.append({
+            "played_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "questions_count": len(self.quizzes),
+            "score": calculated_score
+        })
+        self.save_data()
         print("=" * 40)
 
     def add_quiz(self):
@@ -190,6 +200,16 @@ class QuizGame:
         print("\n" + "=" * 40)
         print(f"🏆 최고 점수: {self.best_score}점")
         print("=" * 40)
+
+        if self.history:
+            print("🕒 게임 기록")
+            print("-" * 40)
+            for idx, record in enumerate(self.history, 1):
+                print(
+                    f"{idx}. [{record.get('played_at', '-')}] "
+                    f"{record.get('questions_count', 0)}문제 풀이 → {record.get('score', 0)}점"
+                )
+            print("-" * 40)
 
     def run(self):
         """메인 실행 루프"""
