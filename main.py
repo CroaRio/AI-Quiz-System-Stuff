@@ -152,7 +152,7 @@ class QuizGame:
 
             choices = []
             for i in range(1, 5):
-                while True:
+                while True:                                 #빈 선택지 방지 기능
                     choice = input(f"선택지 {i}: ").strip()
                     if choice:
                         choices.append(choice)
@@ -178,8 +178,11 @@ class QuizGame:
         print("-" * 40)
         for i, q in enumerate(self.quizzes, 1):
             print(f"[{i}] {q.question}")
-            for idx, choice in enumerate(q.choices, 1):
-                print(f"    {idx}. {choice}")
+            if not q.choices:                      #선택지가 비어있는 경우 표기, 안전장치
+                print("    (선택지 없음)")
+            else:
+                for idx, choice in enumerate(q.choices, 1):
+                    print(f"    {idx}. {choice}")
         print("-" * 40)
 
     def show_score(self):
