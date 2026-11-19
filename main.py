@@ -75,6 +75,8 @@ class QuizGame:
 
     def get_validated_input(self, prompt, min_val, max_val):
         """숫자 입력 및 예외 처리를 공통으로 수행하는 헬퍼 메서드"""
+        """빈 입력, 범위 밖 숫자, 문자를 잘못 넣었을 때의 ValueError,
+           그리고 Ctrl+C / EOFError 같은 종료 상황까지 안전하게 잡아주는 공통 입력 검증 헬퍼."""
         while True:
             try:
                 user_input = input(prompt).strip()
@@ -174,6 +176,7 @@ class QuizGame:
 
     def run(self):
         """메인 실행 루프"""
+        """메인 메뉴를 반복적으로 보여주고 입력에 따라 해당 기능을 호출하는 메인루프"""
         while True:
             print("\n" + "=" * 40)
             print("            🎯 나만의 퀴즈 게임 🎯")
