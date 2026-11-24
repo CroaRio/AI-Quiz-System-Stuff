@@ -1,14 +1,16 @@
 from datetime import datetime
 import json
 import os
+import random
 
 class Quiz:
     """개별 퀴즈를 표현하는 클래스"""
-    def __init__(self, question, choices, answer):
-        """문제(question), 선택지(choices), 정답(answer)의 기능"""
+    def __init__(self, question, choices, answer, hint=""):
+        """문제(question), 선택지(choices), 정답(answer), 힌트(hint)의 기능"""
         self.question = question
         self.choices = choices  # 4개의 리스트
         self.answer = answer    # 정답 번호 (1~4)
+        self.hint = hint
 
     def display(self, index=None):
         """퀴즈 문제와 선택지를 출력"""
@@ -26,7 +28,8 @@ class Quiz:
         return {
             "question": self.question,
             "choices": self.choices,
-            "answer": self.answer
+            "answer": self.answer,
+            "hint": self.hint
         }
 
 
@@ -58,8 +61,10 @@ class QuizGame:
                 
                 self.quizzes = []
                 for q in raw_quizzes:
-                    self.quizzes.append(Quiz(q["question"], q["choices"], q["answer"]))
-            
+                    self.quizzes.append(
+                        Quiz(q["question"], q["choices"], q["answer"], q.get("hint", ""))
+                    )
+
             print(f"📂 저장된 데이터를 불러왔습니다. (퀴즈 {len(self.quizzes)}개, 최고점수 {self.best_score}점)")
         except (json.JSONDecodeError, Exception) as e:      #JSON 문법 깨짐 / 읽기 실패 시 프로그램이 멈추지 않고 기본 데이터로 복구.
             print("⚠️ 데이터 파일이 손상되었거나 읽을 수 없습니다. 기본 데이터로 복구합니다.")
@@ -82,11 +87,36 @@ class QuizGame:
     def init_default_quizzes(self):
         """기본 퀴즈 5개 이상 생성"""
         self.quizzes = [
-            Quiz("Python의 창시자는?", ["Guido van Rossum", "Linus Torvalds", "Bjarne Stroustrup", "James Gosling"], 1),
-            Quiz("다음 중 기본 자료형(Primitive/Built-in type)이 아닌 것은?", ["int", "str", "array", "bool"], 3),
-            Quiz("Git에서 원격 저장소의 내용을 가져와 병합하는 명령어는?", ["git push", "git pull", "git commit", "git init"], 2),
-            Quiz("파이썬에서 함수를 정의할 때 사용하는 키워드는?", ["func", "define", "def", "function"], 3),
-            Quiz("데이터를 키-값(Key-Value) 형태로 저장하는 파이썬 자료구조는?", ["list", "tuple", "dict", "set"], 3)
+            Quiz(
+                "다음 중 카레를 만들 때 들어가면 맛이 없는 것은?",
+                ["코코넛 밀크", "초콜릿", "오이", "바질"],
+                3,
+                "가열하면 수분이 빠져나오면서 물러지고 아삭함이 사라지는 채소입니다."
+            ),
+            Quiz(
+                "다음 중 신선도를 위해 가장 마지막으로 사야하는 물건은?",
+                ["과일", "채소", "과자", "육류"],
+                4,
+                "온도 변화에 가장 민감해 장보기 동선 끝자락에 담는 식재료입니다."
+            ),
+            Quiz(
+                "다음 중 닭개장을 끓일 때 육수를 내기 위해 사용하는 것으로 알맞지 않은 것은?",
+                ["육전", "마늘", "파", "닭고기"],
+                1,
+                "이미 부쳐낸 고기 요리 형태로, 국물 육수 재료와는 결이 다릅니다."
+            ),
+            Quiz(
+                "다음 중 전을 부칠 때 사용하기 적합한 가루는?",
+                ["계피 가루", "밀가루", "카레 가루", "슈가 파우더"],
+                2,
+                "부침 재료에 얇게 옷을 입혀 속과 겉이 어우러지게 만드는 기본 가루입니다."
+            ),
+            Quiz(
+                "다음 중 맛있는 전을 부칠 때 사용하기 적합한 방법은?",
+                ["물을 뿌린다", "설탕을 뿌린다", "기름을 넉넉히 두른다", "기름을 최소한으로 두른다"],
+                3,
+                "팬 바닥에 충분히 둘러야 노릇하고 바삭한 식감이 살아납니다."
+            )
         ]
 
     def get_validated_input(self, prompt, min_val, max_val):
@@ -118,12 +148,30 @@ class QuizGame:
             print("\n❌ 등록된 퀴즈가 없습니다. 퀴즈를 먼저 추가해주세요!")
             return
 
-        print(f"\n📝 퀴즈를 시작합니다! (총 {len(self.quizzes)}문제)")
-        score = 0
+        max_questions = len(self.quizzes)
+        selected_count = self.get_validated_input(
+            f"몇 문제를 푸시겠습니까? (1~{max_questions}): ",
+            1,
+            max_questions
+        )
 
-        for i, q in enumerate(self.quizzes, 1):
+        quizzes_to_play = self.quizzes[:]
+        random.shuffle(quizzes_to_play)
+        quizzes_to_play = quizzes_to_play[:selected_count]
+
+        print(f"\n📝 퀴즈를 시작합니다! (총 {len(quizzes_to_play)}문제)")
+        score = 0
+        hints_used = 0
+
+        for i, q in enumerate(quizzes_to_play, 1):
             print("-" * 40)
             q.display(i)
+
+            if q.hint:
+                use_hint = self.get_validated_input("1. 정답 입력하기  2. 힌트 보기 (-10점): ", 1, 2)
+                if use_hint == 2:
+                    print(f"💡 힌트: {q.hint}")
+                    hints_used += 1
 
             ans = self.get_validated_input("정답 입력 (1-4): ", 1, 4)
 
@@ -135,9 +183,16 @@ class QuizGame:
 
         # 점수 계산 및 최고 점수 갱신 (100점 만점 환산 또는 맞은 개수 기준)
         # 여기서는 맞은 개수를 점수로 사용하거나 백분율로 계산 가능 (미션 예시 기준 맞은 개수 혹은 점수)
-        calculated_score = int((score / len(self.quizzes)) * 100)
+        base_score = int((score / len(quizzes_to_play)) * 100)
+        penalty = hints_used * 10
+        calculated_score = max(0, base_score - penalty)
+
         print("=" * 40)
-        print(f"🏆 결과: {len(self.quizzes)}문제 중 {score}문제 정답! ({calculated_score}점)")
+        print(f"🏆 결과: {len(quizzes_to_play)}문제 중 {score}문제 정답!")
+        if hints_used > 0:
+            print(f"💡 힌트 {hints_used}회 사용 → -{penalty}점 차감 적용 (최종 {calculated_score}점)")
+        else:
+            print(f"📊 최종 점수: {calculated_score}점")
 
         if calculated_score > self.best_score:
             self.best_score = calculated_score
@@ -145,7 +200,7 @@ class QuizGame:
 
         self.history.append({
             "played_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "questions_count": len(self.quizzes),
+            "questions_count": len(quizzes_to_play),
             "score": calculated_score
         })
         self.save_data()
@@ -170,8 +225,9 @@ class QuizGame:
                     print("⚠️ 빈 선택지는 등록할 수 없습니다. 다시 입력해주세요.")
 
             answer = self.get_validated_input("정답 번호 (1-4): ", 1, 4)
+            hint = input("힌트를 입력하세요 (없으면 엔터): ").strip()
 
-            new_quiz = Quiz(question, choices, answer)
+            new_quiz = Quiz(question, choices, answer, hint)
             self.quizzes.append(new_quiz)
             self.save_data()
             print("✅ 퀴즈가 성공적으로 추가되었습니다!")
