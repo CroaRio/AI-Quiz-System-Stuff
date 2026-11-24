@@ -94,19 +94,20 @@ AI-Quiz-System-Stuff/
   
 ### 브랜치 전략 및 병합 의미
 * 작업 단위별로 브랜치(예: feat/..., fix/...)를 나누어 개발하면 불안정한 수정이 main 브랜치에 바로 섞이는 것을 막을 수 있고, 검증이 끝난 뒤 merge로 합쳐 안정적인 배포 기준선(main)을 유지할 수 있습니다.
-* **브랜치 목록 증빙:**
-  (사진 첨부)
-* **커밋 로그(10개 이상) 및 병합 로그 증빙:**
-  (사진 첨부)
+* **브랜치 목록 증빙(pics/브랜치-목록-증빙.png):**
+  ![브랜치 목록](pics/브랜치-목록-증빙.png)
+* **커밋 로그(10개 이상) 및 병합 로그 증빙(pics/커밋-로그-및-병합-로그-증빙.png):**
+  ![커밋 로그 및 병합 로그](pics/커밋-로그-및-병합-로그-증빙.png)
 
 ## 9. 스크린샷 (실행 화면 및 복제/동기화 실습)
-* 메뉴 화면 (docs/screenshots/menu.png):
-  (사진 첨부)
-* 퀴즈 풀기 (docs/screenshots/play.png):
-  (사진 첨부)
-* 퀴즈 추가 (docs/screenshots/add_quiz.png):
-  (사진 첨부)
-* 점수 확인 (docs/screenshots/score.png):
-  (사진 첨부)
-* git clone → 수정/푸시 → 원래 폴더 git pull 실습 화면:
-  (사진 첨부)
+* 메뉴 화면 (pics/메뉴-화면.png):
+  ![메뉴 화면](pics/메뉴-화면.png)
+* 퀴즈 풀기 (pics/퀴즈-풀기.png):
+  ![퀴즈 풀기](pics/퀴즈-풀기.png)
+* 퀴즈 추가 (pics/퀴즈-추가.png):
+  ![퀴즈 추가](pics/퀴즈-추가.png)
+* 점수 확인 (pics/점수-확인.png):
+  ![점수 확인](pics/점수-확인.png)
+* git clone → 수정/푸시 → 원래 폴더 git pull 실습 화면 (pics/git-clone-수정-푸시-및-git-pull-실습-1.png, pics/git-clone-수정-푸시-및-git-pull-실습-2.png):
+  ![git clone 수정 및 푸시 후 git pull 실습1](pics/git-clone-수정-푸시-및-git-pull-실습-1.png)
+  ![git clone 수정 및 푸시 후 git pull 실습1](pics/git-clone-수정-푸시-및-git-pull-실습-2.png)
