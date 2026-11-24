@@ -61,7 +61,7 @@ class QuizGame:
                     self.quizzes.append(Quiz(q["question"], q["choices"], q["answer"]))
             
             print(f"📂 저장된 데이터를 불러왔습니다. (퀴즈 {len(self.quizzes)}개, 최고점수 {self.best_score}점)")
-        except (json.JSONDecodeError, Exception) as e:
+        except (json.JSONDecodeError, Exception) as e:      #JSON 문법 깨짐 / 읽기 실패 시 프로그램이 멈추지 않고 기본 데이터로 복구.
             print("⚠️ 데이터 파일이 손상되었거나 읽을 수 없습니다. 기본 데이터로 복구합니다.")
             self.init_default_quizzes()
             self.save_data()
@@ -76,7 +76,7 @@ class QuizGame:
             }
             with open(self.filename, "w", encoding="utf-8") as f:
                 json.dump(data, f, ensure_ascii=False, indent=4)
-        except Exception as e:
+        except Exception as e:      #저장 실패 시 프로그램이 멈추지 않고 오류 메시지만 출력.
             print(f"⚠️ 데이터 저장 중 오류가 발생했습니다: {e}")
 
     def init_default_quizzes(self):
