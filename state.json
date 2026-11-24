@@ -1,55 +1,83 @@
 {
-    "best_score": 0,
+    "best_score": 90,
+    "history": [
+        {
+            "played_at": "2026-11-24 16:57:29",
+            "questions_count": 1,
+            "score": 90
+        },
+        {
+            "played_at": "2026-11-24 18:45:56",
+            "questions_count": 3,
+            "score": 56
+        }
+    ],
     "quizzes": [
         {
-            "question": "Python의 창시자는?",
+            "question": "다음 중 카레를 만들 때 들어가면 맛이 없는 것은?",
             "choices": [
-                "Guido van Rossum",
-                "Linus Torvalds",
-                "Bjarne Stroustrup",
-                "James Gosling"
+                "코코넛 밀크",
+                "초콜릿",
+                "오이",
+                "바질"
             ],
-            "answer": 1
+            "answer": 3,
+            "hint": "가열하면 수분이 빠져나오면서 물러지고 아삭함이 사라지는 채소입니다."
         },
         {
-            "question": "다음 중 기본 자료형(Primitive/Built-in type)이 아닌 것은?",
+            "question": "다음 중 신선도를 위해 가장 마지막으로 사야하는 물건은?",
             "choices": [
-                "int",
-                "str",
-                "array",
-                "bool"
+                "과일",
+                "채소",
+                "과자",
+                "육류"
             ],
-            "answer": 3
+            "answer": 4,
+            "hint": "온도 변화에 가장 민감해 장보기 동선 끝자락에 담는 식재료입니다."
         },
         {
-            "question": "Git에서 원격 저장소의 내용을 가져와 병합하는 명령어는?",
+            "question": "다음 중 닭개장을 끓일 때 육수를 내기 위해 사용하는 것으로 알맞지 않은 것은?",
             "choices": [
-                "git push",
-                "git pull",
-                "git commit",
-                "git init"
+                "육전",
+                "마늘",
+                "파",
+                "닭고기"
             ],
-            "answer": 2
+            "answer": 1,
+            "hint": "이미 부쳐낸 고기 요리 형태로, 국물 육수 재료와는 결이 다릅니다."
         },
         {
-            "question": "파이썬에서 함수를 정의할 때 사용하는 키워드는?",
+            "question": "다음 중 전을 부칠 때 사용하기 적합한 가루는?",
             "choices": [
-                "func",
-                "define",
-                "def",
-                "function"
+                "계피 가루",
+                "밀가루",
+                "카레 가루",
+                "슈가 파우더"
             ],
-            "answer": 3
+            "answer": 2,
+            "hint": "부침 재료에 얇게 옷을 입혀 속과 겉이 어우러지게 만드는 기본 가루입니다."
         },
         {
-            "question": "데이터를 키-값(Key-Value) 형태로 저장하는 파이썬 자료구조는?",
+            "question": "다음 중 맛있는 전을 부칠 때 사용하기 적합한 방법은?",
             "choices": [
-                "list",
-                "tuple",
-                "dict",
-                "set"
+                "물을 뿌린다",
+                "설탕을 뿌린다",
+                "기름을 넉넉히 두른다",
+                "기름을 최소한으로 두른다"
             ],
-            "answer": 3
+            "answer": 3,
+            "hint": "팬 바닥에 충분히 둘러야 노릇하고 바삭한 식감이 살아납니다."
+        },
+        {
+            "question": "다음 중 계란을 가열할 때 알맞은 행동은?",
+            "choices": [
+                "이불을 덮어준다",
+                "약불로 가열한다",
+                "뚜껑을 덮는다",
+                "젓가락으로 찔러서 구멍을 낸다"
+            ],
+            "answer": 4,
+            "hint": "가열하게 되면 내부의 공기가 팽창하며 폭발의 위험이 있습니다."
         }
     ]
 }
